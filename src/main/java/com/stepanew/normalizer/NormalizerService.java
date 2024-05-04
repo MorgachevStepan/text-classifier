@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 
 public class NormalizerService {
 
-    private final static String STOP_WORDS_PATH = "src/main/resources/data/stop-words.txt";
+    private final static String STOP_WORDS_PATH = "../src/main/resources/data/stop-words.txt";
     private final List<String> stopWords;
     private final Stemmer stemmer;
 
@@ -78,7 +78,7 @@ public class NormalizerService {
     }
 
     private boolean isNormalizedCharacter(char symbol) {
-        return Character.isLetterOrDigit(symbol) || symbol == ' ';
+        return Character.isLetter(symbol) || symbol == ' ';
     }
 
 }

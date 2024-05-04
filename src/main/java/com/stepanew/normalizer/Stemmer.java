@@ -25,7 +25,7 @@ public class Stemmer {
     private static final Pattern[] FIRST_STEP_PATTERNS = {PERFECTIVE_GERUND, REFLEXIVE, ADJECTIVE, VERB, NOUN};
 
     //выделяем RV регион - группу символов после первой гласной
-    public String rv(String word) {
+    public String selectRV(String word) {
         Matcher matcher = RV_REGION.matcher(word);
         if (matcher.find()) {
             return matcher.group(2);
@@ -35,7 +35,7 @@ public class Stemmer {
     }
 
     //выделяем PreRV регион - группу символов RV региона
-    public String preRv(String word) {
+    public String selectPreRV(String word) {
         Matcher matcher = RV_REGION.matcher(word);
         if (matcher.find()) {
             return matcher.group(1);
@@ -45,7 +45,7 @@ public class Stemmer {
     }
 
     //выделяем R1 регион - группу символов после первой согласной после RV
-    public String r1(String word) {
+    public String selectR1(String word) {
         Matcher matcher = R1_REGION.matcher(word);
         if (matcher.find()) {
             return matcher.group(1);
@@ -55,17 +55,17 @@ public class Stemmer {
     }
 
     //выделяем R2 регион - R1, регион в R1 регионе
-    public String r2(String word) {
-        String r1Part = r1(word);
+    public String selectR2(String word) {
+        String r1Part = selectR1(word);
         if (!r1Part.isEmpty()) {
-            return r1(r1Part);
+            return selectR1(r1Part);
         } else {
             return null;
         }
     }
 
     //удаление группы символов согласно паттерну
-    public String del(String word, Pattern pattern) {
+    public String removeMorpheme(String word, Pattern pattern) {
         return pattern.matcher(word)
                 .replaceFirst("");
     }
@@ -73,7 +73,7 @@ public class Stemmer {
     public String step1(String word) {
         for (Pattern pattern : FIRST_STEP_PATTERNS) {
             if (pattern.matcher(word).find()) {
-                return del(word, pattern);
+                return removeMorpheme(word, pattern);
             }
         }
 
@@ -85,9 +85,9 @@ public class Stemmer {
     }
 
     public String step3(String word) {
-        String r2Part = r2(word);
+        String r2Part = selectR2(word);
         if (r2Part != null && DERIVATIONAL.matcher(r2Part).find()) {
-            return del(word, DERIVATIONAL);
+            return removeMorpheme(word, DERIVATIONAL);
         } else {
             return word;
         }
@@ -106,8 +106,8 @@ public class Stemmer {
     }
 
     public String stem(String word) {
-        String preRvPart = preRv(word);
-        String rvPart = rv(word);
+        String preRvPart = selectPreRV(word);
+        String rvPart = selectRV(word);
 
         if (rvPart.isEmpty()) {
             return word;
