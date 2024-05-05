@@ -1,11 +1,15 @@
 package com.stepanew.entities;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+
 import java.util.List;
 
-public record GeneralAnswer(
+@Data
+@AllArgsConstructor
+public class GeneralAnswer {
 
-        Long initTime,
-        List<OneLineAnswer> result
+    Long initTime;
+    List<OneLineAnswer> result;
 
-) {
 }

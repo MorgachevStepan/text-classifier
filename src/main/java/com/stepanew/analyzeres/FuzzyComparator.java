@@ -5,6 +5,7 @@ import java.util.List;
 
 public class FuzzyComparator {
 
+    //подбирался экспериментальным путем
     private static final double WORD_THRESHOLD = 0.45;
 
     public double CalculateFuzzyEqual(List<String> firstNormalized, List<String> secondNormalized) {
