@@ -10,6 +10,7 @@ public class TerminalService {
     private final static String INPUT_FILE_COMMAND = "--input-file";
     private final static String OUTPUT_FILE_COMMAND = "--output-file";
     private final static String OUTPUT_FILE_DEFAULT_PATH = "../src/main/resources/data/output-file.json";
+    private final static String CORRECTED_PATH = "..";
 
     public TerminalService() {
         this.terminalRequest = new TerminalRequest();
@@ -29,7 +30,7 @@ public class TerminalService {
             }
 
             if (args[i].equals(OUTPUT_FILE_COMMAND) && hasNext(i, requestLength)) {
-                terminalRequest.setOutputPath(args[++i]);
+                terminalRequest.setOutputPath(CORRECTED_PATH + args[++i] );
             }
 
         }

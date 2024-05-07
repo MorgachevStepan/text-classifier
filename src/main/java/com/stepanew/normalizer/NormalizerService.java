@@ -1,8 +1,6 @@
 package com.stepanew.normalizer;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -11,7 +9,7 @@ import java.util.stream.Collectors;
 
 public class NormalizerService {
 
-    private final static String STOP_WORDS_PATH = "../src/main/resources/data/stop-words.txt";
+    private final static String STOP_WORDS_PATH = "/data/stop-words.txt";
     private final List<String> stopWords;
     private final Stemmer stemmer;
 
@@ -44,7 +42,8 @@ public class NormalizerService {
     private List<String> getStopWords() {
         List<String> result = new ArrayList<>();
 
-        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(STOP_WORDS_PATH, StandardCharsets.UTF_8))) {
+        try (InputStream in = getClass().getResourceAsStream(STOP_WORDS_PATH)) {
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(in, StandardCharsets.UTF_8));
             String oneLine;
 
             while ((oneLine = bufferedReader.readLine()) != null) {
